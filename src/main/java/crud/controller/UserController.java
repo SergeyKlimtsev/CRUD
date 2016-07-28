@@ -2,14 +2,15 @@ package crud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import crud.model.User;
 import crud.service.UserService;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -22,19 +23,35 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "users", method = RequestMethod.GET)
-    public String getAllUsersList(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("getAllUsersList", userService.getAllUsersList());
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String getIndexPage(Model model) {
+        return "index";
+    }
+
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String getAllUsersList(@RequestParam(value = "page", required = false, defaultValue = "0") int page, Model model) {
+        List<User> allUsers = userService.getAllUsersList();
+        PagedListHolder<User> usersPages = new PagedListHolder<User>(allUsers);
+        usersPages.setPageSize(5);
+        usersPages.setPage(page);
+        model.addAttribute("usersList", usersPages);
         return "users";
     }
 
-    @RequestMapping(value = "/users/add", method = RequestMethod.POST)
-    public String addUser(User user) {
-        if (user.getId() == 0) {
-            userService.addUser(user);
-        } else userService.updateuser(user);
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String addAction(@ModelAttribute("user") User user, Model model) {
+        userService.addUser(user);
         return "redirect:/users";
+
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
+    public String addUser(Model model) {
+        model.addAttribute("user", new User());
+        return "addUser";
+
+
     }
 
     @RequestMapping(value = "/remove/{id}")
@@ -43,16 +60,30 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @RequestMapping(value = "/edit/{id}")
+    @RequestMapping(value = "/edit={id}", method = RequestMethod.GET)
     public String editUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
-        model.addAttribute("getAllUsersList", userService.getAllUsersList());
+
+        return "edit";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateUser(@ModelAttribute("user") User user) {
+        userService.updateUser(user);
+        return "redirect:/users";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String searchByName(@RequestParam("name") String name,
+                               @RequestParam(value = "page", required = false, defaultValue = "0") int page
+            , Model model) {
+        List<User> usersList = userService.searchUsersByName(name);
+        PagedListHolder<User> usersPages = new PagedListHolder<User>(usersList);
+        usersPages.setPageSize(5);
+        usersPages.setPage(page);
+        model.addAttribute("usersList", usersPages);
         return "users";
     }
 
-    @RequestMapping(value = "userdata/{id}")
-    public String userData(@PathVariable("id") int id,Model model){
-        model.addAttribute("user",userService.getUserById(id));
-        return "userdata";
-    }
+
 }

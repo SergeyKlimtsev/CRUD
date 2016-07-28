@@ -69,7 +69,7 @@ public class UserDaoImpl implements UserDao {
     @SuppressWarnings("unchecked")
     public List<User> getAllUsersList() {
         Session session=sessionFactory.getCurrentSession();
-        List<User> users=session.createQuery("from USER").list();
+        List<User> users=(List<User>)session.createQuery("from User").list();
 
         for (User user:users){
             logger.info("User in list: "+user.toString());
@@ -82,7 +82,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> searchUsersByName(String name) {
         Session session=sessionFactory.getCurrentSession();
         Criteria nameCriteria=session.createCriteria(User.class);
-       List<User> users=nameCriteria.add(Restrictions.eq("name",name)).list();
+       List<User> users=nameCriteria.add(Restrictions.like("name",name)).list();
         return users;
     }
 }

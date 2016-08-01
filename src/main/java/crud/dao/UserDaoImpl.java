@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import crud.model.User;
+
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -68,21 +70,27 @@ public class UserDaoImpl implements UserDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<User> getAllUsersList() {
-        Session session=sessionFactory.getCurrentSession();
-        List<User> users=(List<User>)session.createQuery("from User").list();
+        Session session = sessionFactory.getCurrentSession();
+        List<User> users = (List<User>) session.createQuery("from User").list();
 
-        for (User user:users){
-            logger.info("User in list: "+user.toString());
+        for (User user : users) {
+            logger.info("User in list: " + user.toString());
         }
         return users;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<User> searchUsersByName(String name) {
-        Session session=sessionFactory.getCurrentSession();
-        Criteria nameCriteria=session.createCriteria(User.class);
-       List<User> users=nameCriteria.add(Restrictions.like("name",name)).list();
-        return users;
+    public List<User> searchUsers(String name, Integer ageFrom, Integer ageUntil, Boolean isAdmin, Date after, Date before) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(User.class);
+        if (name != null&&!name.isEmpty()) criteria.add(Restrictions.like("name", name));
+        if (ageFrom != null) criteria.add(Restrictions.ge("age", ageFrom.intValue()));
+        if (ageUntil != null) criteria.add(Restrictions.le("age", ageUntil.intValue()));
+        if (isAdmin != null) criteria.add(Restrictions.eq("isAdmin", isAdmin.booleanValue()));
+        if (after != null) criteria.add(Restrictions.ge("createdDate", after));
+        if (before != null) criteria.add(Restrictions.le("createdDate", before));
+
+        return criteria.list();
     }
 }

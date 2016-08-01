@@ -101,9 +101,7 @@
         .tg .tg-yw4l {
             vertical-align: top
         }
-
     </style>
-
 </head>
 
 <body>
@@ -160,9 +158,10 @@
     </table>
 </div>
 <div id="content">
-    <h2>All users </h2>
+    <h2>Searching results:</h2>
 
-    <c:if test="${!empty usersPages}">
+
+    <c:if test="${!empty resultPages.pageList}">
     <table class="tg">
         <tr>
             <th class="tg-13pz">Id</th>
@@ -173,7 +172,7 @@
             <th class="tg-qsvf">Edit</th>
             <th class="tg-qsvf">Remove</th>
         </tr>
-        <c:forEach items="${usersPages.pageList}" var="user">
+        <c:forEach items="${resultPages.pageList}" var="user">
             <tr>
                 <td class="tg-yw4l">${user.id}</td>
                 <td class="tg-yw4l">${user.name}</td>
@@ -187,30 +186,28 @@
                     </c:if>
 
                 </td>
-                <td class="tg-yw4l"><fmt:formatDate value="${user.createdDate}" dateStyle="medium" timeStyle="medium" type="both"/></td>
+                <td class="tg-yw4l"><fmt:formatDate value="${user.createdDate}" dateStyle="medium" timeStyle="medium"
+                                                    type="both"/></td>
                 <td class="tg-yw4l"><a href="/edit=${user.id}">edit</a></td>
                 <td class="tg-yw4l"><a href="/remove=${user.id}">remove</a></td>
             </tr>
         </c:forEach>
 
         <tr>
-            <td style="border-style:hidden"><a <c:if test="${usersPages.firstPage}">hidden</c:if>  href="/users${prevPageRequest}">Prev</a></td>
+            <td style="border-style:hidden"><a <c:if test="${resultPages.firstPage}">hidden</c:if>  href="/search${prevPageRequest}">Prev</a></td>
             <td style="border-style:hidden"></td>
             <td style="border-style:hidden"></td>
             <td style="border-style:hidden"></td>
             <td style="border-style:hidden"></td>
             <td style="border-style:hidden"></td>
-            <td style="border-style:hidden"><a <c:if test="${usersPages.lastPage}">hidden</c:if>  href="/users${nextPageRequest}">Next</a></td>
+            <td style="border-style:hidden"><a <c:if test="${resultPages.lastPage}">hidden</c:if>  href="/search${nextPageRequest}">Next</a></td>
         </tr>
         </c:if>
-        <c:if test="${empty usersPages}">
-            List is EMPTY
+        <c:if test="${empty resultPages.pageList}">
+            No matches.
         </c:if>
 
     </table>
-
-
-
 </div>
 </body>
 </html>

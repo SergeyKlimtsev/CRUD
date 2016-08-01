@@ -2,6 +2,8 @@ package crud.service;
 
 
 import crud.model.User;
+
+import java.util.Date;
 import java.util.List;
 
 public interface UserService {
@@ -15,6 +17,6 @@ public interface UserService {
 
     List<User> getAllUsersList();
 
-    List<User> searchUsersByName(String name);
+    List<User> searchUsers(String name, Integer ageFrom, Integer ageUntil, Boolean isAdmin, Date after, Date before);
 
 }

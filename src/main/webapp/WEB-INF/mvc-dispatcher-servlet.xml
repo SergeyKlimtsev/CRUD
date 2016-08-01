@@ -12,12 +12,15 @@
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
-
+    
+    <!-- View resources-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <mvc:resources mapping="/resources/**" location="/resources"/>
+    
     <!-- Database Source  -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>

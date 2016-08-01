@@ -106,8 +106,8 @@
     </table>
 </div>
 <div id="content">
-    <h2>CRUD Application </h2>
-    <p>JavaRush Test Application</p>
+    <h2>Something went wrong. </h2>
+    <p>${message}</p>
 
 </div>
 

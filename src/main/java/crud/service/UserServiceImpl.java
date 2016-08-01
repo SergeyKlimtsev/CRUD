@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import crud.dao.UserDao;
 import crud.model.User;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -49,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<User> searchUsersByName(String name) {
-        return userDao.searchUsersByName(name);
+    public List<User> searchUsers(String name, Integer ageFrom, Integer ageUntil, Boolean isAdmin, Date after, Date before) {
+        return userDao.searchUsers(name, ageFrom, ageUntil, isAdmin, after, before);
     }
 }

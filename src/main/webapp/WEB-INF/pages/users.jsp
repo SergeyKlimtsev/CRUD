@@ -187,7 +187,7 @@
                     </c:if>
 
                 </td>
-                <td class="tg-yw4l"><fmt:formatDate value="${user.createdDate}" dateStyle="medium" timeStyle="medium" type="both"/></td>
+                <td class="tg-yw4l"><fmt:formatDate value="${user.createdDate}" pattern="dd-MM-yyyy HH:mm:ss"/></td>
                 <td class="tg-yw4l"><a href="/edit=${user.id}">edit</a></td>
                 <td class="tg-yw4l"><a href="/remove=${user.id}">remove</a></td>
             </tr>

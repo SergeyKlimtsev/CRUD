@@ -2,6 +2,7 @@ package crud.model;
 
 
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,6 +26,7 @@ public class User {
 
     @Column(name="CREATEDDATE")
     @Type(type="timestamp")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date createdDate;
 
     public int getId() {

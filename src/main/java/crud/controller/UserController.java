@@ -107,7 +107,6 @@ public class UserController {
                                        @RequestParam("before") @DateTimeFormat(pattern = "yyyy-MM-dd") Date before,
                                        @RequestParam Map<String, String> allRequestParams,
                                        Model model) {
-        String breakpoint = "";
         List<User> resultList = userService.searchUsers(name, ageFrom, ageUntil, isAdmin, after, before);
         PagedListHolder<User> usersPages = new PagedListHolder<User>(resultList);
         usersPages.setPageSize(5);

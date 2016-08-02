@@ -19,7 +19,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <mvc:resources mapping="/resources/**" location="/resources"/>
+
     
     <!-- Database Source  -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">

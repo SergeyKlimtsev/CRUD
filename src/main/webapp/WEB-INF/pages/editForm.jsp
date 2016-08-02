@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Edit</title>
+    <title>Edit user</title>
     <style>
         body {
             font: 11pt Arial, Helvetica, sans-serif;
@@ -68,9 +68,9 @@
 
             <td>
                 User age range:
-                <input name="ageFrom" style="width: 50px"  type="number" min="0" step="1" disabled  placeholder="From">
+                <input name="ageFrom" style="width: 50px" type="number" min="0" step="1" disabled placeholder="From">
                 -
-                <input name="ageUntil" style="width: 50px"  type="number" min="0" step="1" disabled placeholder="Until">
+                <input name="ageUntil" style="width: 50px" type="number" min="0" step="1" disabled placeholder="Until">
             </td>
         </tr>
         <tr>
@@ -162,19 +162,25 @@
                 </td>
             </tr>
             <tr>
+                <td>
+                    <form:label path="createdDate">
+                        <spring:message text="dd-MM-yyyy HH:mm:ss"/>
+                    </form:label>
+                </td>
+            </tr>
             <tr>
                 <td colspan="2">
 
-                    <input   type=submit
+                    <input type=submit
                            value="<spring:message text="Save changes"/>"/>
 
                 </td>
             </tr>
         </table>
     </form:form>
-<c:if test="${isInvalidArguments}">
-    User field can't be empty and age value must be more than 0. Please try again.
-</c:if>
+    <c:if test="${isInvalidArguments}">
+        User field can't be empty and age value must be more than 0. Please try again.
+    </c:if>
 </div>
 </body>
 </html>
